@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+  <xs:element name="entity-structure" type="entity-structureType" />
+
+  <!-- - - - - - - - - - - - - entity-structure - - - - - - - - - - - - - -->
+  <xs:complexType name="entity-structureType">
+    <xs:sequence>
+      <xs:element type="mapping-classesType" name="mapping-classes" minOccurs="1" maxOccurs="1" />
+      <xs:element type="entity-graphsType" name="entity-graphs" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- - - - - - - - - - - - - - mapping-classes - - - - - - - - - - - - - -->
+  <xs:complexType name="mapping-classesType">
+    <xs:sequence>
+      <xs:element type="classType" name="class" maxOccurs="unbounded" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="classType">
+    <xs:sequence>
+      <xs:element type="nodeType" name="node" maxOccurs="unbounded" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="source" use="required" />
+    <xs:attribute type="xs:string" name="destination" use="required" />
+    <xs:attribute type="xs:string" name="bi-directional" use="optional" />
+    <xs:attribute type="xs:string" name="wildcard" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="nodeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="required" />
+        <xs:attribute type="xs:string" name="mapto" use="optional" />
+        <xs:attribute type="xs:string" name="subclass" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- - - - - - - - - - - - - - entity-graphs - - - - - - - - - - - - - - -->
+  <xs:complexType name="entity-graphsType">
+    <xs:sequence>
+      <xs:element type="named-entity-graphType" name="named-entity-graph" maxOccurs="unbounded" minOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="named-entity-graphType">
+    <xs:sequence>
+      <xs:element type="named-attribute-nodeType" name="named-attribute-node" maxOccurs="unbounded"
+        minOccurs="0" />
+      <xs:element type="subgraphType" name="subgraph" maxOccurs="unbounded" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required" />
+    <xs:attribute type="xs:string" name="classname" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="named-attribute-nodeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="optional" />
+        <xs:attribute type="xs:string" name="subgraph" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="subgraphType">
+    <xs:sequence>
+      <xs:element type="named-attribute-nodeType" name="named-attribute-node" maxOccurs="unbounded"
+        minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required" />
+    <xs:attribute type="xs:string" name="classname" use="required" />
+  </xs:complexType>
+</xs:schema>

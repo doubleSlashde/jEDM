@@ -1,0 +1,10 @@
+ALTER TABLE adress DROP FOREIGN KEY FK_adress_adresses
+ALTER TABLE item DROP FOREIGN KEY FK_item_items
+ALTER TABLE customer_bill DROP FOREIGN KEY FK_customer_bill_bills_billid
+ALTER TABLE customer_bill DROP FOREIGN KEY FK_customer_bill_CustomerBE_cid
+DROP TABLE customer
+DROP TABLE bill
+DROP TABLE adress
+DROP TABLE item
+DROP TABLE customer_bill
+DELETE FROM SEQUENCE WHERE SEQ_NAME = 'SEQ_GEN'

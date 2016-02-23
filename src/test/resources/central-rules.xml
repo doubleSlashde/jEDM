@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-structure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.w3.org/schema/central-rules.xsd">
+  <mapping-classes>
+    <class source="de.doubleslash.jedm.model.businessentities.CustomerBE" destination="de.doubleslash.jedm.model.dataobjects.CustomerDO"
+      bi-directional="true">
+      <node name="customerId" />
+      <node name="firstName" mapto="givenName" />
+      <node name="lastName" mapto="familyName" />
+      <node name="addresses" subclass="de.doubleslash.jedm.model.businessentities.AddressBE" />
+      <node name="age" />
+      <node name="bills" subclass="de.doubleslash.jedm.model.businessentities.BillBE" />
+    </class>
+
+    <class source="de.doubleslash.jedm.model.businessentities.BillBE" destination="de.doubleslash.jedm.model.dataobjects.BillDO">
+      <node name="billId" />
+      <node name="billDate" />
+      <node name="sum" mapto="total" />
+      <node name="items" subclass="de.doubleslash.jedm.model.businessentities.ItemBE" />
+    </class>
+
+    <class source="de.doubleslash.jedm.model.businessentities.AddressBE" destination="de.doubleslash.jedm.model.dataobjects.AddressDO">
+      <node name="addressId" />
+      <node name="street" />
+      <node name="number" mapto="houseNumber" />
+      <node name="town" />
+      <node name="zip" mapto="zipCode" />
+    </class>
+
+    <class source="de.doubleslash.jedm.model.businessentities.ItemBE" destination="de.doubleslash.jedm.model.dataobjects.ItemDO">
+      <node name="itemId" />
+      <node name="description" mapto="label" />
+      <node name="singlePrice" />
+      <node name="quantity" />
+    </class>
+  </mapping-classes>
+
+  <entity-graphs>
+    <named-entity-graph name="EntityGraph_CustomerUltraLight_CentralXML" classname="de.doubleslash.jedm.model.businessentities.CustomerBE">
+      <named-attribute-node name="firstName" />
+      <named-attribute-node name="lastName" />
+    </named-entity-graph>
+
+    <named-entity-graph name="EntityGraph_CustomerLight_CentralXML" classname="de.doubleslash.jedm.model.businessentities.CustomerBE">
+      <named-attribute-node name="firstName" />
+      <named-attribute-node name="lastName" />
+      <named-attribute-node name="age" />
+      <named-attribute-node name="addresses" subgraph="addressSubgraph_CentralXML" />
+
+      <subgraph name="addressSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.AddressBE">
+        <named-attribute-node name="street" />
+        <named-attribute-node name="number" />
+      </subgraph>
+    </named-entity-graph>
+
+    <named-entity-graph name="EntityGraph_CustomerBasic_CentralXML" classname="de.doubleslash.jedm.model.businessentities.CustomerBE">
+      <named-attribute-node name="firstName" />
+      <named-attribute-node name="bills" subgraph="billSubgraph_CentralXML" />
+      <named-attribute-node name="age" />
+      <named-attribute-node name="addresses" subgraph="addressSubgraph_CentralXML" />
+
+      <subgraph name="addressSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.AddressBE">
+        <named-attribute-node name="street" />
+        <named-attribute-node name="number" />
+      </subgraph>
+
+      <subgraph name="billSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.BillBE">
+        <named-attribute-node name="sum" />
+        <named-attribute-node name="billDate" />
+      </subgraph>
+    </named-entity-graph>
+
+    <named-entity-graph name="EntityGraph_CustomerFull_CentralXML" classname="de.doubleslash.jedm.model.businessentities.CustomerBE">
+      <named-attribute-node name="firstName" />
+      <named-attribute-node name="lastName" />
+      <named-attribute-node name="bills" subgraph="billSubgraph_CentralXML" />
+      <named-attribute-node name="age" />
+      <named-attribute-node name="addresses" subgraph="addressSubgraph_CentralXML" />
+
+      <subgraph name="addressSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.AddressBE">
+        <named-attribute-node name="street" />
+        <named-attribute-node name="number" />
+      </subgraph>
+
+      <subgraph name="billSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.BillBE">
+        <named-attribute-node name="sum" />
+        <named-attribute-node name="billDate" />
+        <named-attribute-node name="items" subgraph="itemSubgraph_CentralXML" />
+      </subgraph>
+
+      <subgraph name="itemSubgraph_CentralXML" classname="de.doubleslash.jedm.model.businessentities.ItemBE">
+        <named-attribute-node name="quantity" />
+      </subgraph>
+    </named-entity-graph>
+  </entity-graphs>
+</entity-structure>
