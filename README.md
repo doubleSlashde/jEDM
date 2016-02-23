@@ -2,7 +2,7 @@
 
 This Framework is a thesis project with the translated name "Central data mapping definition in Java EE environment".
 
-It is a prototype that combines JPA EntityGraphs with the Object-to-Object mapping framework "Dozer"
+It is a prototype that combines JPA EntityGraphs with the object to object mapping framework "Dozer"
 
 # Abstract
 
@@ -28,4 +28,4 @@ Using this framework guarantees
 Assuming you already have a database and two data models, the next step is to create a xml file with the name "central-rules.xml" that contains all object to object mapping rules and all specified entity graphs. 
 After you filled that file correctly you can use the program API to start the framework.
 
-There is an example with customer data implmemented that gets loaded from a H2 database over an entity graph and mapped into the frontend. 
+There is an example with customer data implemented that gets loaded from a H2 database over an entity graph and mapped into the frontend. 
