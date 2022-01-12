@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
@@ -18,7 +19,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -60,7 +60,7 @@ public class BuildEntityGraph implements BuildEntityGraphInterface {
 					attributesSubgraphList = (NodeList) xPath.compile(attributesSubgraphListString).evaluate(doc,
 							XPathConstants.NODESET);
 				} catch (final XPathExpressionException e) {
-					LOGGER.warn("Exception in BuildEntityGraph::buildSubgraph, full stack trace follows: ", e);
+					LOGGER.warning("Exception in BuildEntityGraph::buildSubgraph");
 				}
 
 				// reads all attributes of the subgraph
@@ -144,7 +144,7 @@ public class BuildEntityGraph implements BuildEntityGraphInterface {
 			}
 		} catch (XPathExpressionException | ParserConfigurationException | SAXException | IOException
 				| URISyntaxException e) {
-			LOGGER.warn("Exception in BuildEntityGraph::generateEntityGraphXPath, full stack trace follows: ", e);
+			LOGGER.warning("Exception in BuildEntityGraph::generateEntityGraphXPath");
 		}
 		return graph;
 	}

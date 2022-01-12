@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,7 +14,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingBuilder;
@@ -39,7 +39,7 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 
 	/**
 	 * Constructor for Exception handling.
-	 * 
+	 *
 	 * @param msg
 	 *            Error message
 	 */
@@ -50,7 +50,7 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 	/**
 	 * Help method: maps all primitive attributes of the class and excludes
 	 * subgraphs, if they are not mentioned in the entity graph.
-	 * 
+	 *
 	 * @param builder
 	 *            - contains the classes between which is mapped
 	 * @param attributeNodeList
@@ -104,7 +104,7 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 	/**
 	 * Help method: searches for a match between the classes defined in an
 	 * entity graph and the classes for the mapping rules.
-	 * 
+	 *
 	 * @param classList
 	 *            - list of all defined classes below the mapping-classes tag
 	 * @param className
@@ -126,7 +126,7 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 
 	/**
 	 * Builds mapping rules for Dozer on the base of a EntityGraph definition.
-	 * 
+	 *
 	 * @param graphName
 	 *            Name of the EntityGraph, defined in XML
 	 * @return complete mapper of Type DozerBeanMapper
@@ -189,10 +189,9 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 						try {
 							throw new BuildDozerMapping(msg);
 						} catch (final Exception e) {
-							LOGGER.warn(
+							LOGGER.warning(
 									"Exception in BuildDozerMapping::generateMappingRulesXPath, full stack trace follows: "
-											+ msg,
-									e);
+											+ msg);
 						}
 					} else {
 						classElem = classExistsInMappingRules(classList, rootElem.getAttribute("classname"));
@@ -206,9 +205,8 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 						classNodeList = (NodeList) xPath.compile(classNodeListString).evaluate(doc,
 								XPathConstants.NODESET);
 					} catch (final XPathExpressionException e) {
-						LOGGER.warn(
-								"XPathExpressionException in BuildDozerMapping::generateMappingRulesXPath, full stack trace follows: ",
-								e);
+						LOGGER.warning(
+								"XPathExpressionException in BuildDozerMapping::generateMappingRulesXPath");
 					}
 
 					TypeMappingBuilder builder = mapping(classElem.getAttribute("source"),
@@ -235,9 +233,8 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 							attributeSubgraphList = (NodeList) xPath.compile(attributeSubgraphListString).evaluate(doc,
 									XPathConstants.NODESET);
 						} catch (final XPathExpressionException e) {
-							LOGGER.warn(
-									"XPathExpressionException in BuildDozerMapping::generateMappingRulesXPath, full stack trace follows: ",
-									e);
+							LOGGER.warning(
+									"XPathExpressionException in BuildDozerMapping::generateMappingRulesXPath");
 						}
 
 						if (classExistsInMappingRules(classList, subgraphElem.getAttribute("classname")) == null) {
@@ -247,9 +244,8 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 							try {
 								throw new BuildDozerMapping(msg);
 							} catch (final Exception e) {
-								LOGGER.warn(
-										"Exception in BuildDozerMapping::generateMappingRulesXPath, full stack trace follows: ",
-										e);
+								LOGGER.warning(
+										"Exception in BuildDozerMapping::generateMappingRulesXPath");
 							}
 
 						} else {
@@ -264,7 +260,7 @@ public class BuildDozerMapping extends Exception implements BuildMappingRulesInt
 			};
 			mapper.addMapping(mappingBuilder);
 		} catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
-			LOGGER.warn("Exception in BuildDozerMapping::generateMappingRulesXPath, full stack trace follows: ", e);
+			LOGGER.warning("Exception in BuildDozerMapping::generateMappingRulesXPath");
 		}
 		return mapper;
 	}
